@@ -1,17 +1,21 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Book } from '../../book/entities/book.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
-@ObjectType()
 export class Author {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Field(() => String, { description: 'First name of the author' })
+  @ApiProperty()
   @Column()
   firstName: string;
 
-  @Field(() => String, { description: 'Last name of the author' })
+  @ApiProperty()
   @Column()
   lastName: string;
+
+  @OneToMany(() => Book, (book) => book.author)
+  books: Book[];
 }

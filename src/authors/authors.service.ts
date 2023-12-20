@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorInput } from './dto/create-author.input';
-import { UpdateAuthorInput } from './dto/update-author.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Author } from './entities/author.entity';
@@ -13,7 +12,7 @@ export class AuthorsService {
   ) {}
 
   create(createAuthorInput: CreateAuthorInput) {
-    return 'This action adds a new author';
+    return this.authorRepository.save(createAuthorInput);
   }
 
   findAll() {
@@ -21,14 +20,15 @@ export class AuthorsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} author`;
+    return this.authorRepository.findOneBy({ id });
   }
 
-  update(id: number, updateAuthorInput: UpdateAuthorInput) {
-    return `This action updates a #${id} author`;
+  update(id: number, updateAuthorInput: CreateAuthorInput) {
+    return this.authorRepository.update({ id }, updateAuthorInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} author`;
+  async remove(id: number) {
+    const { affected } = await this.authorRepository.delete({ id });
+    return affected > 0;
   }
 }

@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateAuthorInput {
+export class RegisterInput {
   @ApiProperty()
-  firstName: string;
+  email: string;
 
   @ApiProperty()
-  lastName: string;
+  password: string;
 }
