@@ -1,9 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthorsService } from './authors.service';
 import { Author } from './entities/author.entity';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { GetAuthorInput } from './dto/get-author.input';
+import { AuthGuard } from '../auth/guards/auth.guard';
 
 @ApiTags('authors')
 @Controller('authors')
@@ -29,17 +43,21 @@ export class AuthorsController {
   }
 
   @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Post()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: Author,
   })
+  @ApiBody({ type: CreateAuthorInput })
   create(@Body() createAuthorDto: CreateAuthorInput): Promise<Author> {
     return this.authorsService.create(createAuthorDto);
   }
 
   @ApiBearerAuth()
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  // TODO: based on role
   @ApiCreatedResponse({
     description: 'The record has been successfully deleted.',
     type: Boolean,

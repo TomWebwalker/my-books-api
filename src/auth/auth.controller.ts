@@ -5,7 +5,7 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { LoginInput, RegisterInput } from './dto';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
@@ -19,6 +19,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @ApiBody({ type: RegisterInput })
   async register(@Body() registerInput: RegisterInput) {
     const user = await this.usersService.findOne({
       where: { email: registerInput.email },
@@ -37,6 +38,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiBody({ type: LoginInput })
   login(@Body() { email, password }: LoginInput) {
     return this.authService.validateUser(email, password);
   }
