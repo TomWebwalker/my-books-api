@@ -17,5 +17,5 @@ RUN npm run build
 EXPOSE 3000
 
 # uncomment this if you want to use Google Cloud SQL
-CMD ["sh", "-c", "./cloud_sql_proxy -instances=$CLOUD_SQL_CONNECTION_NAME=tcp:0.0.0.0:3306 && npm run start:prod"]
+CMD ["sh", "-c", "./cloud_sql_proxy -instances=$CLOUD_SQL_CONNECTION_NAME=tcp:0.0.0.0:3306 & ls & npm run start:prod"]
 # CMD ["npm run start:prod"]
