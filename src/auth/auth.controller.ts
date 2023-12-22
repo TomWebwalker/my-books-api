@@ -4,18 +4,19 @@ import {
   HttpException,
   HttpStatus,
   Post,
-  Request,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { RegisterInput } from './dto/register.input';
+import { LoginInput, RegisterInput } from './dto';
 import { UsersService } from '../users/users.service';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from './auth.service';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post('register')
   async register(@Body() registerInput: RegisterInput) {
@@ -35,9 +36,8 @@ export class AuthController {
     return this.usersService.create(registerInput);
   }
 
-  @UseGuards(AuthGuard('local'))
   @Post('login')
-  login(@Request() @Body() req) {
-    return req.user;
+  login(@Body() { email, password }: LoginInput) {
+    return this.authService.validateUser(email, password);
   }
 }
