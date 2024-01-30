@@ -42,8 +42,8 @@ export class AuthorsController {
     return this.authorsService.findOne(params.id);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
   @Post()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
