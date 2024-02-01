@@ -18,4 +18,7 @@ export class Author {
 
   @OneToMany(() => Book, (book) => book.author)
   books: Book[];
+
+  @ApiProperty()
+  totalBooks: number;
 }

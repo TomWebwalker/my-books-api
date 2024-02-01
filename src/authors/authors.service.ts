@@ -15,8 +15,12 @@ export class AuthorsService {
     return this.authorRepository.save(createAuthorInput);
   }
 
-  findAll() {
-    return this.authorRepository.find();
+  async findAll() {
+    const authors = await this.authorRepository.find({ relations: ['books'] });
+    return authors.map((author) => ({
+      ...author,
+      totalBooks: author.books.length,
+    }));
   }
 
   findOne(id: number) {
