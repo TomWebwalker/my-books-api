@@ -54,9 +54,9 @@ export class AuthorsController {
     return this.authorsService.create(createAuthorDto);
   }
 
-  @ApiBearerAuth()
+  // @ApiBearerAuth()
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   // TODO: based on role
   @ApiCreatedResponse({
     description: 'The record has been successfully deleted.',
