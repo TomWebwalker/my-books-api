@@ -18,7 +18,9 @@ export class AuthorsService {
   async findAll() {
     const authors = await this.authorRepository.find({ relations: ['books'] });
     return authors.map((author) => ({
-      ...author,
+      id: author.id,
+      firstName: author.firstName,
+      lastName: author.lastName,
       totalBooks: author.books.length,
     }));
   }
