@@ -22,11 +22,11 @@ export class BooksService {
     const ext = cover.originalname.split('.').pop();
     const coverName = `${Date.now()}-${name}.${ext}`;
 
-    const buffer = await sharp(cover.buffer).resize(200, 350).toBuffer();
-    await storage
-      .bucket('my-books-404218.appspot.com')
-      .file(`covers/${coverName}`)
-      .save(buffer);
+    // const buffer = await sharp(cover.buffer).resize(200, 350).toBuffer();
+    // await storage
+    //   .bucket('my-books-404218.appspot.com')
+    //   .file(`covers/${coverName}`)
+    //   .save(buffer);
     return await this.bookRepository.save({ ...createBookDto, coverName });
   }
 
