@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Book } from '../../book/entities/book.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Book } from '../../books/entities/book.entity';
 
 @Entity()
 export class Author {

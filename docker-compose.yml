@@ -4,6 +4,7 @@ services:
   my-books-api:
     build:
       context: .
+      dockerfile: Dockerfile-dev
     depends_on:
       - mysqldb
     ports:
@@ -20,7 +21,7 @@ services:
     - .:/app
     - /app/node_modules
     command: npm run start:dev
-  
+
   mysqldb:
     image: mysql:8.0
     restart: unless-stopped
@@ -46,5 +47,5 @@ services:
     ports:
       - 8081:80
 
-volumes: 
+volumes:
   db:

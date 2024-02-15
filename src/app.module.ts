@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AuthorsModule } from './authors/authors.module';
 import * as process from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Author } from './authors/entities/author.entity';
-import { BookModule } from './book/book.module';
-import { Book } from './book/entities/book.entity';
+import { Book } from './books/entities/book.entity';
+import { User } from './users/entities/user.entity';
+import { AuthorsModule } from './authors/authors.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { User } from './users/entities/user.entity';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
-    AuthorsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -22,9 +21,10 @@ import { User } from './users/entities/user.entity';
       entities: [Author, Book, User],
       autoLoadEntities: true,
     }),
-    BookModule,
+    AuthorsModule,
     UsersModule,
     AuthModule,
+    BooksModule,
   ],
 })
 export class AppModule {}
