@@ -22,11 +22,11 @@ export class BooksService {
     const ext = cover.originalname.split('.').pop();
     const coverName = `${Date.now()}-${name}.${ext}`;
 
-    await sharp(cover.buffer).resize(200, 350).toFile(`./temp/${coverName}`);
+    await sharp(cover.buffer).resize(200, 350).toFile(`./${coverName}`);
 
     await storage
       .bucket('my-books-404218.appspot.com')
-      .upload(`./temp/${coverName}`, {
+      .upload(`./${coverName}`, {
         destination: `covers/${coverName}`,
       });
 
